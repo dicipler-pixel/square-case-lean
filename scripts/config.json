@@ -1,0 +1,28 @@
+{
+  "modules": [
+    {
+      "module": "OperatorFirst.FourBodyWallInvariant",
+      "path": "OperatorFirst/FourBodyWallInvariant.lean"
+    },
+    {
+      "module": "OperatorFirst.FourBodyPSDWallBridge",
+      "path": "OperatorFirst/FourBodyPSDWallBridge.lean"
+    },
+    {
+      "module": "OperatorFirst.ProjectionTraceBridge",
+      "path": "OperatorFirst/ProjectionTraceBridge.lean"
+    },
+    {
+      "module": "OperatorFirst.HypersurfaceSquareLineage",
+      "path": "OperatorFirst/HypersurfaceSquareLineage.lean"
+    }
+  ],
+  "expected_theorems": 43,
+  "expected_false_controls": 3,
+  "root_imports": [
+    "OperatorFirst.FourBodyWallInvariant",
+    "OperatorFirst.FourBodyPSDWallBridge",
+    "OperatorFirst.ProjectionTraceBridge",
+    "OperatorFirst.HypersurfaceSquareLineage"
+  ]
+}

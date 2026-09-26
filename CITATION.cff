@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use these Lean proofs, please cite them as below."
+title: "The Square Case: Lean proofs"
+authors:
+  - family-names: "Beasley"
+    given-names: "Jeromie"
+version: 1.0.0
+date-released: 2026-09-26
+license: MIT
+repository-code: "https://github.com/dicipler-pixel/square-case-lean"
+keywords:
+  - Lean 4
+  - Mathlib
+  - formal verification
+  - projector geometry
+  - four-body problem
+  - shape space
+references:
+  - type: article
+    title: "The Square Case: Gram Reduction and Spectral Transport for N = d + 1 Bodies"
+    authors:
+      - family-names: "Beasley"
+        given-names: "Jeromie"
+    doi: "10.5281/zenodo.21855591"
