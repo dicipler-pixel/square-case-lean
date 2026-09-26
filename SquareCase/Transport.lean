@@ -73,9 +73,15 @@ theorem transport_on_diagonal (t g h : n → ℝ) :
   ext i j
   by_cases hij : i = j
   · subst hij
-    simp [blockMatrix, sub_mulVec, mulVec, dotProduct, vecMulVec_apply, trace, diagonal_apply,
-      mul_sum]
-    ring_nf
+    have htr : trace (diagonal t * diagonal h) = ∑ j, t j * h j := by
+      simp [Matrix.trace, diagonal_mul_diagonal]
+    have hrow : (vecMulVec g t *ᵥ h) i = g i * ∑ j, t j * h j := by
+      simp only [mulVec, dotProduct, vecMulVec_apply, mul_sum, mul_assoc]
+    rw [htr]
+    simp only [Matrix.sub_apply, Matrix.add_apply, Matrix.smul_apply, diagonal_mul_diagonal,
+      diagonal_apply_eq, smul_eq_mul]
+    rw [blockMatrix, sub_mulVec, Pi.sub_apply, mulVec_diagonal, hrow]
+    ring
   · simp [hij, diagonal_apply]
 
 /-- **Theorem 5.6**: the eigenvalue block is diagonally similar to a symmetric rank-one
@@ -107,7 +113,7 @@ theorem symmetrisation (t g : n → ℝ) (ht : ∀ i, 0 < t i) (hg : ∀ i, 0 < 
   rw [mul_diagonal, diagonal_mul]
   by_cases hij : i = j
   · subst hij
-    simp only [blockMatrix, sub_apply, diagonal_apply_eq, vecMulVec_apply]
+    simp only [blockMatrix, Matrix.sub_apply, diagonal_apply_eq, vecMulVec_apply]
     have e1 := su i
     have e2 := us i
     have e3 := ss i
@@ -117,7 +123,7 @@ theorem symmetrisation (t g : n → ℝ) (ht : ∀ i, 0 < t i) (hg : ∀ i, 0 < 
             (Real.sqrt (g i / t i) * Real.sqrt (g i * t i)) *
               (Real.sqrt (g i * t i) * Real.sqrt (t i / g i)) := by ring
       _ = t i - g i * t i := by rw [e1, e2, e3, mul_one]
-  · simp only [blockMatrix, sub_apply, diagonal_apply_ne _ hij, vecMulVec_apply, zero_sub]
+  · simp only [blockMatrix, Matrix.sub_apply, diagonal_apply_ne _ hij, vecMulVec_apply, zero_sub]
     calc Real.sqrt (g i / t i) * -(Real.sqrt (g i * t i) * Real.sqrt (g j * t j)) *
           Real.sqrt (t j / g j)
         = -((Real.sqrt (g i / t i) * Real.sqrt (g i * t i)) *
@@ -129,7 +135,7 @@ theorem weighted_symmetric (t g : n → ℝ) (hg : ∀ i, g i ≠ 0) :
     (diagonal (fun i => t i / g i) * blockMatrix t g)ᵀ =
       diagonal (fun i => t i / g i) * blockMatrix t g := by
   ext i j
-  simp only [transpose_apply, diagonal_mul, blockMatrix, sub_apply, vecMulVec_apply]
+  simp only [transpose_apply, diagonal_mul, blockMatrix, Matrix.sub_apply, vecMulVec_apply]
   by_cases hij : i = j
   · subst hij
     rfl
