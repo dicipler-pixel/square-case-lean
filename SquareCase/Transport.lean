@@ -152,7 +152,7 @@ def symElem (i j : n) : Matrix n n ℝ :=
 theorem eigenframe_spectrum (t : n → ℝ) (i j : n) :
     diagonal t * symElem i j + symElem i j * diagonal t = (t i + t j) • symElem i j := by
   ext k l
-  simp only [add_apply, diagonal_mul, mul_diagonal, smul_apply, smul_eq_mul, symElem]
+  simp only [Matrix.add_apply, diagonal_mul, mul_diagonal, Matrix.smul_apply, smul_eq_mul, symElem]
   by_cases h : (k = i ∧ l = j) ∨ (k = j ∧ l = i)
   · rw [if_pos h]
     rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> ring
