@@ -1,6 +1,6 @@
 name = "square-case-lean"
 version = "1.0.0"
-defaultTargets = ["OperatorFirst"]
+defaultTargets = ["OperatorFirst", "SquareCase"]
 
 [[require]]
 name = "mathlib"
@@ -16,3 +16,8 @@ roots = [
   "OperatorFirst.ProjectionTraceBridge",
   "OperatorFirst.HypersurfaceSquareLineage",
 ]
+
+# Written for this repository from the paper.
+[[lean_lib]]
+name = "SquareCase"
+roots = ["SquareCase.Transport"]

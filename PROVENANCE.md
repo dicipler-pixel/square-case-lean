@@ -13,5 +13,6 @@ same bytes on `formal/hypersurface-square-lineage-2026-09-11`.
 | `ProjectionTraceBridge.lean` | `3b0407736058b30b4c5ab878237f74b26b9bb6adf1f6bd07f81c4311e86766b7` |
 | `HypersurfaceSquareLineage.lean` | `4b81d5d38c00641b611c4a1389b5b586a4aa30e4fe7c24a63325ec674a442c54` |
 
-The three files in `FalseControls/` were written for this repository. The SHA-256 of every
+`SquareCase/Transport.lean` and the three files in `FalseControls/` were written for this
+repository; `SquareCase/Transport.lean` is taken from the paper's Sections 2, 5 and 6. The SHA-256 of every
 checked file is written to `verification/report.json` on each run.
