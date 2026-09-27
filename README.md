@@ -6,7 +6,7 @@
 
 [![Lean proof check](https://github.com/dicipler-pixel/square-case-lean/actions/workflows/build.yml/badge.svg)](https://github.com/dicipler-pixel/square-case-lean/actions/workflows/build.yml)
 ![Lean](https://img.shields.io/badge/Lean-v4.33.0-blue)
-![Theorems](https://img.shields.io/badge/theorems-57-2EA043)
+![Theorems](https://img.shields.io/badge/theorems-63-2EA043)
 ![sorry](https://img.shields.io/badge/sorry-0-2EA043)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 [![Paper DOI](https://img.shields.io/badge/paper-10.5281%2Fzenodo.21855590-blue)](https://doi.org/10.5281/zenodo.21855590)
@@ -46,8 +46,8 @@ puts `L` in the kernel, so no separate null-vector assumption is needed.
 | [`ProjectionTraceBridge`](OperatorFirst/ProjectionTraceBridge.lean) | 5 | `‖P − Q‖²_F = Tr P + Tr Q − 2 Tr(PQ)` for orthogonal projections; equal rank `k` gives `Tr(PQ) = k − ½‖P − Q‖²_F` |
 | [`HypersurfaceSquareLineage`](OperatorFirst/HypersurfaceSquareLineage.lean) | 26 | Inverse-gap-square response, Snell ⇔ squared metric Snell, rank-one projector distance `2 sin²θ`, fold/Gram fourth-power rigidity `1/s⁴`, three-body `sec⁴θ`, reduced four-body wall map, orientation weight |
 | [`SquareCase/Transport`](SquareCase/Transport.lean) | 10 | From the paper itself: the Gram invariant (Prop. 2.1), the forced coefficient `c = 2` (Lemma 5.2), the eigenvalue block (Prop. 5.4), symmetrisation `D_t − g tᵀ = S(D_t − uuᵀ)S⁻¹` (Thm. 5.6), the eigenframe spectrum `tᵢ + tⱼ` (Thm. 6.1), and secular-equation eigenvectors (Thm. 6.2) |
-| [`SquareCase/Secular`](SquareCase/Secular.lean) | 4 | Theorem 6.2: every eigenvalue off the `tᵢ` solves the secular equation `Σ gᵢtᵢ/(tᵢ − μ) = 1`; the secular function strictly increases across each gap; so two eigenvalues never share a gap |
-| **Total** | **57** | |
+| [`SquareCase/Secular`](SquareCase/Secular.lean) | 10 | Theorem 6.2: every eigenvalue off the `tᵢ` solves the secular equation `Σ gᵢtᵢ/(tᵢ − μ) = 1`; the secular function strictly increases across each gap and runs from `−∞` to `+∞` between consecutive poles; so **every gap holds exactly one eigenvalue**, with eigenvector `gᵢ/(tᵢ − μ)` |
+| **Total** | **63** | |
 
 ## How it is checked
 
