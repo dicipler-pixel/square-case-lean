@@ -98,4 +98,111 @@ theorem eigenvalues_separated (t g : n → ℝ) [Nonempty n] (hgt : ∀ i, 0 < g
   have := secular_strict t g hgt x y hxy h
   linarith
 
+/-! ## Existence: every gap holds an eigenvalue -/
+
+theorem secular_split (t g : n → ℝ) (a : n) (x : ℝ) :
+    secular t g x = g a * t a / (t a - x) + ∑ i ∈ univ.erase a, g i * t i / (t i - x) := by
+  unfold secular
+  rw [add_sum_erase _ _ (mem_univ a)]
+
+/-- Away from the pole at `t a`, the other terms of the secular function are continuous. -/
+theorem rest_tendsto (t g : n → ℝ) (hinj : Function.Injective t) (a : n) (l : Filter ℝ)
+    (hl : l ≤ nhds (t a)) :
+    Filter.Tendsto (fun x => ∑ i ∈ univ.erase a, g i * t i / (t i - x)) l
+      (nhds (∑ i ∈ univ.erase a, g i * t i / (t i - t a))) := by
+  apply Filter.Tendsto.mono_left _ hl
+  apply tendsto_finset_sum
+  intro i hi
+  have hne : t i - t a ≠ 0 := sub_ne_zero.mpr (fun h => (mem_erase.mp hi).1 (hinj h))
+  exact tendsto_const_nhds.div (tendsto_const_nhds.sub Filter.tendsto_id) hne
+
+/-- Just above a pole `t a` the secular function falls below `1`. -/
+theorem secular_below_one_near_left (t g : n → ℝ) (hinj : Function.Injective t)
+    (hgt : ∀ i, 0 < g i * t i) (a : n) :
+    ∀ᶠ x in nhdsWithin (t a) (Ioi (t a)), secular t g x < 1 := by
+  set R := ∑ i ∈ univ.erase a, g i * t i / (t i - t a)
+  have hrest := rest_tendsto t g hinj a _ nhdsWithin_le_nhds
+  have hden : Filter.Tendsto (fun x => t a - x) (nhdsWithin (t a) (Ioi (t a)))
+      (nhdsWithin 0 (Iio 0)) := by
+    apply tendsto_nhdsWithin_iff.mpr
+    constructor
+    · have : Filter.Tendsto (fun x => t a - x) (nhds (t a)) (nhds (t a - t a)) :=
+        tendsto_const_nhds.sub Filter.tendsto_id
+      rw [sub_self] at this
+      exact this.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with x hx
+      exact sub_neg.mpr hx
+  have hterm : Filter.Tendsto (fun x => g a * t a / (t a - x))
+      (nhdsWithin (t a) (Ioi (t a))) Filter.atBot := by
+    have := (tendsto_inv_nhdsLT_zero.comp hden).const_mul_atBot (hgt a)
+    refine this.congr (fun x => ?_)
+    simp [div_eq_mul_inv]
+  filter_upwards [hterm.eventually (Filter.eventually_lt_atBot (-R)),
+    hrest.eventually (Iio_mem_nhds (lt_add_one R))] with x h1 h2
+  rw [secular_split t g a x]
+  simp only [mem_Iio] at h2
+  linarith
+
+/-- Just below a pole `t b` the secular function rises above `1`. -/
+theorem secular_above_one_near_right (t g : n → ℝ) (hinj : Function.Injective t)
+    (hgt : ∀ i, 0 < g i * t i) (b : n) :
+    ∀ᶠ x in nhdsWithin (t b) (Iio (t b)), 1 < secular t g x := by
+  set R := ∑ i ∈ univ.erase b, g i * t i / (t i - t b)
+  have hrest := rest_tendsto t g hinj b _ nhdsWithin_le_nhds
+  have hden : Filter.Tendsto (fun x => t b - x) (nhdsWithin (t b) (Iio (t b)))
+      (nhdsWithin 0 (Ioi 0)) := by
+    apply tendsto_nhdsWithin_iff.mpr
+    constructor
+    · have : Filter.Tendsto (fun x => t b - x) (nhds (t b)) (nhds (t b - t b)) :=
+        tendsto_const_nhds.sub Filter.tendsto_id
+      rw [sub_self] at this
+      exact this.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with x hx
+      exact sub_pos.mpr hx
+  have hterm : Filter.Tendsto (fun x => g b * t b / (t b - x))
+      (nhdsWithin (t b) (Iio (t b))) Filter.atTop := by
+    have := (tendsto_inv_nhdsGT_zero.comp hden).const_mul_atTop (hgt b)
+    refine this.congr (fun x => ?_)
+    simp [div_eq_mul_inv]
+  filter_upwards [hterm.eventually (Filter.eventually_gt_atTop (2 - R)),
+    hrest.eventually (Ioi_mem_nhds (sub_one_lt R))] with x h1 h2
+  rw [secular_split t g b x]
+  simp only [mem_Ioi] at h2
+  linarith
+
+/-- **Existence (Theorem 6.2).** Between two poles `t a < t b` with no other `tᵢ` in between,
+the secular equation has a root. -/
+theorem secular_root_in_gap (t g : n → ℝ) (hinj : Function.Injective t)
+    (hgt : ∀ i, 0 < g i * t i) (a b : n) (hab : t a < t b)
+    (hgap : ∀ i, t i ∉ Ioo (t a) (t b)) :
+    ∃ μ ∈ Ioo (t a) (t b), secular t g μ = 1 := by
+  obtain ⟨x₀, hx₀, hx₀b, hx₀a⟩ := ((secular_below_one_near_left t g hinj hgt a).and
+    ((mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hab)).and self_mem_nhdsWithin)).exists
+  simp only [mem_Iio, mem_Ioi] at hx₀b hx₀a
+  obtain ⟨y₀, hy₀, hy₀x, hy₀b⟩ := ((secular_above_one_near_right t g hinj hgt b).and
+    ((mem_nhdsWithin_of_mem_nhds (Ioi_mem_nhds hx₀b)).and self_mem_nhdsWithin)).exists
+  simp only [mem_Iio, mem_Ioi] at hy₀x hy₀b
+  have hsub : Icc x₀ y₀ ⊆ Ioo (t a) (t b) := fun x hx => ⟨by linarith [hx.1], by linarith [hx.2]⟩
+  have hcont : ContinuousOn (secular t g) (Icc x₀ y₀) := by
+    unfold secular
+    apply continuousOn_finset_sum
+    intro i _
+    apply continuousOn_const.div (continuousOn_const.sub continuousOn_id)
+    intro x hx h0
+    exact hgap i (by rw [sub_eq_zero.mp h0]; exact hsub hx)
+  obtain ⟨μ, hμ, hfμ⟩ := intermediate_value_Icc hy₀x.le hcont ⟨hx₀.le, hy₀.le⟩
+  exact ⟨μ, hsub hμ, hfμ⟩
+
+/-- **Every gap holds exactly one eigenvalue (Theorem 6.2).** Between consecutive `tᵢ` there
+is an eigenvalue of `D_t − g tᵀ`, with eigenvector `vᵢ = gᵢ/(tᵢ − μ)`. -/
+theorem eigenvalue_in_gap (t g : n → ℝ) (hinj : Function.Injective t)
+    (hgt : ∀ i, 0 < g i * t i) (a b : n) (hab : t a < t b)
+    (hgap : ∀ i, t i ∉ Ioo (t a) (t b)) :
+    ∃ μ ∈ Ioo (t a) (t b),
+      blockMatrix t g *ᵥ (fun i => g i / (t i - μ)) = μ • (fun i => g i / (t i - μ)) := by
+  obtain ⟨μ, hμ, hf⟩ := secular_root_in_gap t g hinj hgt a b hab hgap
+  refine ⟨μ, hμ, secular_eigenvector t g μ ?_ hf⟩
+  intro i h
+  exact hgap i (h ▸ hμ)
+
 end SquareCase.Secular

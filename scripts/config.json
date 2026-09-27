@@ -25,7 +25,7 @@
       "path": "SquareCase/Secular.lean"
     }
   ],
-  "expected_theorems": 57,
+  "expected_theorems": 63,
   "expected_false_controls": 3,
   "root_imports": [
     "OperatorFirst.FourBodyWallInvariant",
