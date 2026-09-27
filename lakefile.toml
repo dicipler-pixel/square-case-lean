@@ -20,4 +20,4 @@ roots = [
 # Written for this repository from the paper.
 [[lean_lib]]
 name = "SquareCase"
-roots = ["SquareCase.Transport"]
+roots = ["SquareCase.Transport", "SquareCase.Secular"]

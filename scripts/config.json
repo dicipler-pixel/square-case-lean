@@ -19,15 +19,20 @@
     {
       "module": "SquareCase.Transport",
       "path": "SquareCase/Transport.lean"
+    },
+    {
+      "module": "SquareCase.Secular",
+      "path": "SquareCase/Secular.lean"
     }
   ],
-  "expected_theorems": 53,
+  "expected_theorems": 57,
   "expected_false_controls": 3,
   "root_imports": [
     "OperatorFirst.FourBodyWallInvariant",
     "OperatorFirst.FourBodyPSDWallBridge",
     "OperatorFirst.ProjectionTraceBridge",
     "OperatorFirst.HypersurfaceSquareLineage",
-    "SquareCase.Transport"
+    "SquareCase.Transport",
+    "SquareCase.Secular"
   ]
 }
