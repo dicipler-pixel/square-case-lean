@@ -1,6 +1,6 @@
 /-
 Finite results of *The Square Case: Gram Reduction and Spectral Transport for N = d + 1
-Bodies* (Jeromie Beasley, DOI 10.5281/zenodo.21855591), written for this repository.
+Bodies* (Jeromie Beasley, DOI 10.5281/zenodo.21855590), written for this repository.
 
 Proved here:
 * Proposition 2.1: `G = XᵀX` is invariant under `X ↦ RX` for orthogonal `R`, and `G`

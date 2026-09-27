@@ -9,8 +9,8 @@
 ![Theorems](https://img.shields.io/badge/theorems-53-2EA043)
 ![sorry](https://img.shields.io/badge/sorry-0-2EA043)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
-[![Paper DOI](https://img.shields.io/badge/paper-10.5281%2Fzenodo.21855591-blue)](https://doi.org/10.5281/zenodo.21855591)
-[![Paper DOI](https://img.shields.io/badge/paper-10.5281%2Fzenodo.20818169-blue)](https://doi.org/10.5281/zenodo.20818169)
+[![Paper DOI](https://img.shields.io/badge/paper-10.5281%2Fzenodo.21855590-blue)](https://doi.org/10.5281/zenodo.21855590)
+[![Paper DOI](https://img.shields.io/badge/paper-10.5281%2Fzenodo.20818168-blue)](https://doi.org/10.5281/zenodo.20818168)
 
 Jeromie Beasley
 
@@ -70,9 +70,9 @@ python3 scripts/verify.py
 ## The papers
 
 - *The Square Case: Gram Reduction and Spectral Transport for N = d + 1 Bodies*, Jeromie
-  Beasley. DOI [10.5281/zenodo.21855591](https://doi.org/10.5281/zenodo.21855591).
+  Beasley. DOI [10.5281/zenodo.21855590](https://doi.org/10.5281/zenodo.21855590).
 - *5D Spectral Anatomy of Four-Body Obstructions*, Jeromie Beasley. DOI
-  [10.5281/zenodo.20818169](https://doi.org/10.5281/zenodo.20818169).
+  [10.5281/zenodo.20818168](https://doi.org/10.5281/zenodo.20818168).
 
 ## Citation, licence and AI use
 
