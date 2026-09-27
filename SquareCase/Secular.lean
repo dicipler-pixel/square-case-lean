@@ -140,7 +140,6 @@ theorem secular_below_one_near_left (t g : n → ℝ) (hinj : Function.Injective
   filter_upwards [hterm.eventually (Filter.eventually_lt_atBot (-R)),
     hrest.eventually (Iio_mem_nhds (lt_add_one R))] with x h1 h2
   rw [secular_split t g a x]
-  simp only [Set.mem_Iio] at h2
   linarith
 
 /-- Just below a pole `t b` the secular function rises above `1`. -/
@@ -167,7 +166,6 @@ theorem secular_above_one_near_right (t g : n → ℝ) (hinj : Function.Injectiv
   filter_upwards [hterm.eventually (Filter.eventually_gt_atTop (2 - R)),
     hrest.eventually (Ioi_mem_nhds (sub_one_lt R))] with x h1 h2
   rw [secular_split t g b x]
-  simp only [Set.mem_Ioi] at h2
   linarith
 
 /-- **Existence (Theorem 6.2).** Between two poles `t a < t b` with no other `tᵢ` in between,
@@ -191,7 +189,8 @@ theorem secular_root_in_gap (t g : n → ℝ) (hinj : Function.Injective t)
     intro i _
     apply continuousOn_const.div (continuousOn_const.sub continuousOn_id)
     intro x hx h0
-    exact hgap i (by rw [sub_eq_zero.mp h0]; exact hsub hx)
+    have hti : t i = x := by simpa [sub_eq_zero] using h0
+    exact hgap i (by rw [hti]; exact hsub hx)
   obtain ⟨μ, hμ, hfμ⟩ := intermediate_value_Icc hy₀x.le hcont ⟨hx₀.le, hy₀.le⟩
   exact ⟨μ, hsub hμ, hfμ⟩
 
