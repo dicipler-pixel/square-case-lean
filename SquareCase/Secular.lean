@@ -131,7 +131,7 @@ theorem secular_below_one_near_left (t g : n → ℝ) (hinj : Function.Injective
       rw [sub_self] at this
       exact this.mono_left nhdsWithin_le_nhds
     · filter_upwards [self_mem_nhdsWithin] with x hx
-      exact sub_neg.mpr hx
+      exact sub_neg.mpr (Set.mem_Ioi.mp hx)
   have hterm : Filter.Tendsto (fun x => g a * t a / (t a - x))
       (nhdsWithin (t a) (Ioi (t a))) Filter.atBot := by
     have := (tendsto_inv_nhdsLT_zero.comp hden).const_mul_atBot (hgt a)
@@ -140,7 +140,7 @@ theorem secular_below_one_near_left (t g : n → ℝ) (hinj : Function.Injective
   filter_upwards [hterm.eventually (Filter.eventually_lt_atBot (-R)),
     hrest.eventually (Iio_mem_nhds (lt_add_one R))] with x h1 h2
   rw [secular_split t g a x]
-  simp only [mem_Iio] at h2
+  simp only [Set.mem_Iio] at h2
   linarith
 
 /-- Just below a pole `t b` the secular function rises above `1`. -/
@@ -158,7 +158,7 @@ theorem secular_above_one_near_right (t g : n → ℝ) (hinj : Function.Injectiv
       rw [sub_self] at this
       exact this.mono_left nhdsWithin_le_nhds
     · filter_upwards [self_mem_nhdsWithin] with x hx
-      exact sub_pos.mpr hx
+      exact sub_pos.mpr (Set.mem_Iio.mp hx)
   have hterm : Filter.Tendsto (fun x => g b * t b / (t b - x))
       (nhdsWithin (t b) (Iio (t b))) Filter.atTop := by
     have := (tendsto_inv_nhdsGT_zero.comp hden).const_mul_atTop (hgt b)
@@ -167,7 +167,7 @@ theorem secular_above_one_near_right (t g : n → ℝ) (hinj : Function.Injectiv
   filter_upwards [hterm.eventually (Filter.eventually_gt_atTop (2 - R)),
     hrest.eventually (Ioi_mem_nhds (sub_one_lt R))] with x h1 h2
   rw [secular_split t g b x]
-  simp only [mem_Ioi] at h2
+  simp only [Set.mem_Ioi] at h2
   linarith
 
 /-- **Existence (Theorem 6.2).** Between two poles `t a < t b` with no other `tᵢ` in between,
@@ -179,11 +179,11 @@ theorem secular_root_in_gap (t g : n → ℝ) (hinj : Function.Injective t)
   obtain ⟨x₀, hx₀, hx₀b, hx₀a⟩ := ((secular_below_one_near_left t g hinj hgt a).and
     ((eventually_nhdsWithin_of_eventually_nhds (eventually_lt_nhds hab)).and
       eventually_mem_nhdsWithin)).exists
-  simp only [mem_Ioi] at hx₀a
+  simp only [Set.mem_Ioi] at hx₀a
   obtain ⟨y₀, hy₀, hy₀x, hy₀b⟩ := ((secular_above_one_near_right t g hinj hgt b).and
     ((eventually_nhdsWithin_of_eventually_nhds (eventually_gt_nhds hx₀b)).and
       eventually_mem_nhdsWithin)).exists
-  simp only [mem_Iio] at hy₀b
+  simp only [Set.mem_Iio] at hy₀b
   have hsub : Icc x₀ y₀ ⊆ Ioo (t a) (t b) := fun x hx => ⟨by linarith [hx.1], by linarith [hx.2]⟩
   have hcont : ContinuousOn (secular t g) (Icc x₀ y₀) := by
     unfold secular
