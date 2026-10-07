@@ -45,9 +45,9 @@ puts `L` in the kernel, so no separate null-vector assumption is needed.
 | [`FourBodyWallInvariant`](OperatorFirst/FourBodyWallInvariant.lean) | 9 | `σ_L` is linear; the wall line `W + tH` stays on the wall; the raw intrinsic term and the commutator correction both preserve the wall tangent (`intrinsic_preserves_wall_tangent`) |
 | [`FourBodyPSDWallBridge`](OperatorFirst/FourBodyPSDWallBridge.lean) | 3 | For `W ⪰ 0`: `L W Lᵀ = 0 ⇔ W L = 0`, so the tangent theorem needs only the wall equation |
 | [`ProjectionTraceBridge`](OperatorFirst/ProjectionTraceBridge.lean) | 5 | `‖P − Q‖²_F = Tr P + Tr Q − 2 Tr(PQ)` for orthogonal projections; equal rank `k` gives `Tr(PQ) = k − ½‖P − Q‖²_F` |
-| [`HypersurfaceSquareLineage`](OperatorFirst/HypersurfaceSquareLineage.lean) | 26 | Inverse-gap-square response, Snell ⇔ squared metric Snell, rank-one projector distance `2 sin²θ`, fold/Gram fourth-power rigidity `1/s⁴`, three-body `sec⁴θ`, reduced four-body wall map, orientation weight |
-| [`SquareCase/Transport`](SquareCase/Transport.lean) | 10 | From the paper itself: the Gram invariant (Prop. 2.1), the forced coefficient `c = 2` (Lemma 5.2), the eigenvalue block (Prop. 5.4), symmetrisation `D_t − g tᵀ = S(D_t − uuᵀ)S⁻¹` (Thm. 5.6), the eigenframe spectrum `tᵢ + tⱼ` (Thm. 6.1), and secular-equation eigenvectors (Thm. 6.2) |
-| [`SquareCase/Secular`](SquareCase/Secular.lean) | 10 | Theorem 6.2: every eigenvalue off the `tᵢ` solves the secular equation `Σ gᵢtᵢ/(tᵢ − μ) = 1`; the secular function strictly increases across each gap and runs from `−∞` to `+∞` between consecutive poles; so **every gap holds exactly one eigenvalue**, with eigenvector `gᵢ/(tᵢ − μ)` |
+| [`HypersurfaceSquareLineage`](OperatorFirst/HypersurfaceSquareLineage.lean) | 26 | Inverse-gap-square response, Snell ⇔ squared metric Snell, rank-one projector distance `2 sin²θ` (for the hand-expanded entrywise formula), fold/Gram fourth-power rigidity `1/s⁴` and three-body `sec⁴θ` (algebra on the model definitions `gramSoft s = s²` and `rigidityFromGram λ = 1/λ²`), reduced four-body wall map (a two-variable model), orientation weight |
+| [`SquareCase/Transport`](SquareCase/Transport.lean) | 10 | From the paper itself: the Gram invariant (Prop. 2.1), the forced coefficient `c = 2` (Lemma 5.2), the eigenvalue block (Prop. 5.4), symmetrisation `D_t − g tᵀ = S(D_t − uuᵀ)S⁻¹` (Thm. 5.6), the eigenframe relation `T E_ij + E_ij T = (tᵢ + tⱼ) E_ij` for diagonal `T` (Thm. 6.1), and secular-equation eigenvectors (Thm. 6.2) |
+| [`SquareCase/Secular`](SquareCase/Secular.lean) | 10 | Theorem 6.2: every eigenvalue off the `tᵢ` solves the secular equation `Σ gᵢtᵢ/(tᵢ − μ) = 1`; for distinct `tᵢ` with every `gᵢtᵢ > 0`, the secular function strictly increases across each gap, lies below `1` just above each pole and above `1` just below the next; so every gap between consecutive `tᵢ` holds an eigenvalue, with eigenvector `gᵢ/(tᵢ − μ)` (`eigenvalue_in_gap`), and no gap holds two (`eigenvalues_separated`): **exactly one eigenvalue per gap**, from these two theorems together |
 | **Total** | **63** | |
 
 ## How it is checked
@@ -75,6 +75,11 @@ python3 scripts/verify.py
   Beasley. DOI [10.5281/zenodo.21855590](https://doi.org/10.5281/zenodo.21855590).
 - *5D Spectral Anatomy of Four-Body Obstructions*, Jeromie Beasley. DOI
   [10.5281/zenodo.20818168](https://doi.org/10.5281/zenodo.20818168).
+
+`SquareCase/` is written from *The Square Case* (Sections 2, 5 and 6). The `OperatorFirst/`
+files are copies from the author's research repository (see [`PROVENANCE.md`](PROVENANCE.md));
+a file-by-file mapping of their results to statements of *5D Spectral Anatomy of Four-Body
+Obstructions* is not yet given here.
 
 ## Citation, licence and AI use
 

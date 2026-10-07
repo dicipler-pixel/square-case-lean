@@ -194,8 +194,9 @@ theorem secular_root_in_gap (t g : n → ℝ) (hinj : Function.Injective t)
   obtain ⟨μ, hμ, hfμ⟩ := intermediate_value_Icc hy₀x.le hcont ⟨hx₀.le, hy₀.le⟩
   exact ⟨μ, hsub hμ, hfμ⟩
 
-/-- **Every gap holds exactly one eigenvalue (Theorem 6.2).** Between consecutive `tᵢ` there
-is an eigenvalue of `D_t − g tᵀ`, with eigenvector `vᵢ = gᵢ/(tᵢ − μ)`. -/
+/-- **Every gap holds an eigenvalue (Theorem 6.2, existence).** Between consecutive `tᵢ` there
+is an eigenvalue of `D_t − g tᵀ`, with eigenvector `vᵢ = gᵢ/(tᵢ − μ)`. With
+`eigenvalues_separated` (no gap holds two), each gap holds exactly one. -/
 theorem eigenvalue_in_gap (t g : n → ℝ) (hinj : Function.Injective t)
     (hgt : ∀ i, 0 < g i * t i) (a b : n) (hab : t a < t b)
     (hgap : ∀ i, t i ∉ Ioo (t a) (t b)) :
